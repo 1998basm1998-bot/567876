@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة خدمات واتساب API</title>
+    <style>
+        /* تعريف ألوان هوية واتساب */
+        :root {
+            --wa-green: #25D366; /* الأخضر الفاتح */
+            --wa-dark: #128C7E;  /* الأخضر الغامق */
+            --bg-color: #ece5dd; /* لون خلفية المحادثات */
+            --text-dark: #333333;
+            --text-light: #777777;
+        }
+
+        /* إعدادات الصفحة الأساسية */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* تصميم الرأس (الهيدر) */
+        header {
+            background-color: var(--wa-dark);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        /* حاوية البطاقات */
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 20px;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* تصميم بطاقات الأسعار */
+        .card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            width: 350px;
+            padding: 30px;
+            text-align: center;
+            border-top: 6px solid var(--wa-green);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            color: var(--text-dark);
+            margin-top: 0;
+        }
+
+        .price {
+            font-size: 45px;
+            font-weight: bold;
+            color: var(--wa-dark);
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .price span {
+            font-size: 16px;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+
+        /* تصميم الأزرار */
+        .btn {
+            background-color: var(--wa-green);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background-color: var(--wa-dark);
+        }
+
+        /* تصميم قائمة الميزات */
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: right;
+            border-top: 1px solid #eeeeee;
+            padding-top: 20px;
+        }
+
+        .features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+            color: var(--text-dark);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        /* علامة الصح بجانب الميزات */
+        .features li::before {
+            content: '✓';
+            color: white;
+            background-color: var(--wa-green);
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* تصميم الفوتر (الجزء السفلي) */
+        footer {
+            background-color: #ffffff;
+            padding: 25px 20px;
+            text-align: center;
+            color: var(--text-light);
+            border-top: 2px solid #e0e0e0;
+        }
+
+        footer p {
+            margin: 0;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* استجابة الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الجزء العلوي -->
+    <header>
+        <h1>بوابة خدمات الربط البرمجي (WhatsApp)</h1>
+    </header>
+
+    <!-- المحتوى الرئيسي (البطاقات) -->
+    <div class="container">
+        
+        <!-- بطاقة الاشتراك السنوي -->
+        <div class="card">
+            <h2>API واتساب (اشتراك سنوي)</h2>
+            <div class="price">25$ <span>/ سنوياً</span></div>
+            <button class="btn" onclick="buyAction('الاشتراك السنوي بقيمة 25 دولار')">شراء API سنوي</button>
+            <p style="color: var(--text-light); font-size: 14px;">خيار مثالي للشركات الناشئة لتجربة الخدمة.</p>
+        </div>
+
+        <!-- بطاقة الاشتراك الدائم -->
+        <div class="card" style="border-top-color: var(--wa-dark);">
+            <h2>API واتساب (اشتراك دائم)</h2>
+            <div class="price">59$ <span>/ مدى الحياة</span></div>
+            <button class="btn" style="background-color: var(--wa-dark);" onclick="buyAction('الاشتراك الدائم بقيمة 59 دولار')">شراء API دائم</button>
+            
+            <!-- الميزات المطلوبة -->
+            <ul class="features">
+                <li>كود ربط برمجي سلس وموثوق</li>
+                <li>دومين فتح لـ (الهاتف، الحاسوب، والآيفون)</li>
+                <li>إرسال رسائل بلا حدود</li>
+                <li>دعم فني مخصص على مدار الساعة 24/7</li>
+                <li>تحديثات برمجية مجانية مستمرة</li>
+                <li>لوحة تحكم وتقارير دقيقة للإرسال</li>
+                <li>حماية وتشفير عالي للبيانات</li>
+                <li>إمكانية الربط مع أنظمة إدارة العملاء (CRM)</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- الجزء السفلي -->
+    <footer>
+        <p>نحن شركة رائدة في تقديم حلول الربط البرمجي المتقدمة لتطبيق واتساب. نهدف إلى تسهيل تواصل الشركات مع عملائها من خلال أدوات ذكية، آمنة، وفعالة.<br>© 2026 جميع الحقوق محفوظة لشركتنا.</p>
+    </footer>
+
+    <!-- جافا سكريبت للتفاعل -->
+    <script>
+        function buyAction(planName) {
+            // هذه الرسالة ستظهر عند الضغط على زر الشراء
+            alert("مرحباً بك!\nلقد اخترت: " + planName + ".\nسيتم توجيهك الآن إلى صفحة الدفع الآمنة لإتمام العملية.");
+        }
+    </script>
+
+</body>
+</html>
